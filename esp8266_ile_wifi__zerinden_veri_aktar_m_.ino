@@ -68,19 +68,23 @@ void setup() {
   logger->println("Seri Dahili Geri Döngü etkin");
 #endif
 
+  //Wifi işelmleri wifi server ın kurulması 
+  //ve aynı zaamanda wifi ismi ve şifresinin girilerek bağlanması
   WiFi.mode(WIFI_STA);
   WiFi.begin(ssid, password);
   logger->print("\nBağlanıyor ");
   logger->println(ssid);
+  //wifi ye bağlanmamış ise 
   while (WiFi.status() != WL_CONNECTED) {
     logger->print('.');
     delay(500);
   }
   logger->println();
   logger->print("bağlı, adres=");
+  // wifi de ki kullandıgı ip hakkında ekrana bilgi basar 
   logger->println(WiFi.localIP());
 
-  //start server
+  //Server ın başlatılması
   server.begin();
   server.setNoDelay(true);
 
@@ -91,6 +95,7 @@ void setup() {
 
 void loop() {
   //yeni müşteri olup olmadığını kontrol et
+  //yani server başlatılmış ise 
   if (server.hasClient()) {
     //serbest / bağlantısız nokta bul
     int i;
@@ -151,6 +156,7 @@ void loop() {
         }
       } else {
         // sıkışık müşterileri uyar ama yoksay
+        //fazşşa bir bağlantı var ise bu bölüme girilerek
         logger->println("bir müşteri tıkalı");
       }
     }
